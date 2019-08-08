@@ -8,6 +8,9 @@
 | 2016-11-27   |      5 |
 +--------------+--------+
 */
+SELECT booking_date, nights
+FROM booking
+WHERE guest_id = 1183
 
 --2.
 /* When do they get here? 
@@ -22,6 +25,10 @@ List the arrival time and the first and last names for all guests due to arrive 
 | 22:00        | Justin     | Tomlinson |
 +--------------+------------+-----------+
 */
+SELECT arrival_time, first_name, last_name
+FROM booking JOIN guest ON guest_id = guest.id
+WHERE booking_date = '2016-11-05'
+ORDER BY arrival_time
 
 --3.
 /*
@@ -35,6 +42,9 @@ Include booking id, room type, number of occupants and the amount.
 |       5295 | family              |         3 |  84.00 |
 +------------+---------------------+-----------+--------+
 */
+SELECT DISTINCT booking_id, room_type_requested, occupants, amount
+FROM booking JOIN rate  ON (room_type_requested=room_type) AND (occupants=occupancy)
+WHERE booking_id IN (5152, 5165, 5154, 5295) 
 
 --4.
 /*
