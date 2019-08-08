@@ -55,6 +55,9 @@ Who’s in 101? Find who is staying in room 101 on 2016-12-03, include first nam
 | Graham     | Evans     | Weaver Vale |
 +------------+-----------+-------------+
 */
+SELECT first_name, last_name, address
+FROM guest JOIN booking ON (guest.id=booking.guest_id)
+WHERE room_no = 101 AND booking_date = '2016-12-03'
 
 --5.
 /*
@@ -67,4 +70,8 @@ Your output should include the guest id and the total number of bookings and the
 |     1270 |             2 |           3 |
 +----------+---------------+-------------+
 */
+SELECT guest_id, COUNT(nights), SUM(nights)
+FROM booking
+WHERE guest_id IN (1185, 1270)
+GROUP BY guest_id
 
