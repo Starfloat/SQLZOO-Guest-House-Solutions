@@ -1,2 +1,2 @@
-# SQLZOO_Guest_House_Solutions
+# SQLZOO-Guest-House-Solutions
 Solutions to https://sqlzoo.net/wiki/Guest_House
