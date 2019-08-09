@@ -9,6 +9,10 @@ You should JOIN to the rate table using room_type_requested and occupants.
 |             552.00 |
 +--------------------+
 */
+SELECT SUM(nights*amount)
+FROM booking JOIN rate  ON (room_type_requested=room_type AND occupants=occupancy)
+             JOIN guest ON (guest.id=booking.guest_id)
+WHERE first_name = 'Ruth' AND last_name = 'Cadbury'
 
 --7.
 /*Including Extras. Calculate the total bill for booking 5346 including extras.
@@ -18,6 +22,11 @@ You should JOIN to the rate table using room_type_requested and occupants.
 |      118.56 |
 +-------------+
 */
+-- probably incorrect
+SELECT SUM(rate.amount + extra.amount)
+FROM booking JOIN extra ON (booking.booking_id=extra.booking_id)
+             JOIN rate ON  (room_type_requested=room_type) AND (occupancy=occupants)
+WHERE booking.booking_id = 5346
 
 --8.
 /*Edinburgh Residents. For every guest who has the word “Edinburgh” in their address show the total number of nights booked. 
