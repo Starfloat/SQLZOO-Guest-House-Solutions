@@ -42,6 +42,16 @@ Order by last name then first name.
 | Thomson   | Michelle   | Edinburgh West            |      3 |
 +-----------+------------+---------------------------+--------+
 */
+SELECT last_name, first_name, address, 
+CASE WHEN SUM(nights) IS NULL
+     THEN 0
+     ELSE SUM(nights)
+     END AS nights
+FROM guest LEFT JOIN booking ON (id=guest_id)
+WHERE address LIKE '%Edinburgh%'
+GROUP BY last_name, first_name, address
+ORDER BY last_name, first_name
+
 
 --9.
 /*How busy are we? For each day of the week beginning 2016-11-25 show the number of bookings starting that day. 
@@ -58,6 +68,10 @@ Be sure to show all the days of the week in the correct order.
 | 2016-12-01 |        7 |
 +------------+----------+
 */
+SELECT booking_date AS i, COUNT(guest_id) AS arrivals
+FROM booking
+WHERE booking_date BETWEEN '2016-11-25' AND '2016-12-01'
+GROUP BY i
 
 --10.
 /*How many guests? Show the number of guests in the hotel on the night of 2016-11-21. 
@@ -68,3 +82,5 @@ Include all occupants who checked in that day but not those who checked out.
 |             39 |
 +----------------+
 */
+SELECT SUM(occupants) FROM booking
+WHERE booking_date <= '2016-11-21' AND DATE_ADD(booking_date, INTERVAL nights DAY) > '2016-11-21'
